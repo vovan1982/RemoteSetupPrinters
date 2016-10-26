@@ -1,0 +1,699 @@
+;Hewlett-Packard LaserJet printer driver INF file
+;Copyright Hewlett-Packard 2010
+
+
+[Version]
+Signature="$Windows NT$"
+Provider=%HP% 
+ClassGUID={4D36E979-E325-11CE-BFC1-08002BE10318} 
+Class=Printer 
+DriverPackageType=PlugAndPlay
+DriverPackageDisplayName=%HP_Mombi_Driver_Name1% 
+CatalogFile=hpc4555u.cat
+DriverVer=08/07/2012,61.130.05.12834
+DriverIsolation=2
+
+
+[MANUFACTURER]
+%HP%=HP,NTx86,NTAMD64
+
+
+[HP.NTx86]
+
+
+[HP.NTAMD64]
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,LPTENUM\Hewlett-PackardHP_La08FD
+
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17&rev_0100
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17&rev_0100&PRINT_HPZ
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17&PRINT_HPZ
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17&rev_0100&DOT4&PRINT_HPZ
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\VID_03F0&PID_9C17&DOT4&PRINT_HPZ
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\Hewlett-PackardHP_La08FD
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\Hewlett-PackardHP_La08FD&PRINT_HPZ
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,DOT4PRT\Hewlett-PackardHP_La08FD&DOT4&PRINT_HPZ
+
+"HP LaserJet M4555 MFP PCL 6" = hpc45556.gpd.NTAMD64,WSDPRINT\Hewlett-PackardHP_La08FD
+
+
+[OEM URLS]
+%HP% = "http://go.microsoft.com/fwlink/?LinkID=37&prd=10798&sbp=Printers"
+
+
+[hpc45556.gpd.NTAMD64]
+CopyFiles=DATA_FILES_4555,HPPRPROC,UI,DMC_AMD64,PCL6RENDER,EAC,GPD_PCL6_COMMON1,STRING_DLL,MANUAL_DUPLEX,RES_PCL6,DMC_32,PCLXL_GPD_P3,HELP,HP_UNIDRV,SERVICES,PNPDLL,PNPDLL_SYSCOPY,CAPI_32,CAPI_64,IMAGING,VENDOR_SETUP,SECUREPRINT
+DataFile=hpc45556.gpd
+DriverFile=unidrv.dll
+ConfigFile=hpmdp130.dll
+HelpFile=unidrv.hlp
+PrintProcessor=%PRINT_PROCESSOR% 
+AddReg=REGISTRY_SNP,RegSettings
+DelFiles=DEL9xFILE
+FeatureScore=0x20
+
+
+[hpc45556.gpd.NTAMD64.CoInstallers]
+AddReg=CoLaunchInstall.AddReg
+CopyFiles=VENDOR_SETUP
+
+
+[CoLaunchInstall.AddReg]
+HKR,,CoInstallers32,0x10000,"hpbcoins64.dll,CoInstall"
+
+
+[VENDOR_SETUP]
+hpbcoins64.dll
+
+
+[InstallData]
+LaunchExe=Autorun.exe
+Params=/HWFirst
+PnPFinishEvent=hpc4555u
+InstallerRunningEvent=hpbcsiInstaller
+IOBackfill=DOT4
+
+
+[SourceInfo]
+SourceDirectory = %1%
+
+
+[PrinterPackageInstallation.amd64]
+PackageAware=TRUE
+
+
+[DEL9xFILE]
+hpzimn12.dll 
+
+
+[DMC_32]
+hpcdmc32.dll,hpcdmc32.dll,,0x00000020
+hpbcfgre.dll,hpbcfgre.dll,,0x00000020
+
+
+[CAPI_32]
+hpcc3130.dll,hpcc3130.dll,,0x00000020
+
+
+[CAPI_64]
+hpcc6130.dll,hpcc6130.dll,,0x00000020
+
+
+[HPPRPROC]
+hpcpp130.dll,hpcpp130.dll,,0x00000020
+
+
+[UI]
+hpcui130.dll,hpcui130.dll,,0x00000020
+hpcpn130.dll,hpcpn130.dll,,0x00000020
+hpcpe130.dll,hpcpe130.dll,,0x00000020
+hpmdp130.dll,,0x00000020
+
+
+[PNPDLL]
+hpcpn130.dll,hpcpn130.dll,,0x00000020
+hpcpp130.dll,hpcpp130.dll,,0x00000020
+
+
+[PNPDLL_SYSCOPY]
+hpcpn130.dll,hpcpn130.dll,,0x00000020
+
+
+[PCL6RENDER]
+hpc6r130.dll,hpc6r130.dll,,0x00000020
+
+
+[GPD_PCL6_COMMON1]
+hpc6m130.gpd,hpc6m130.gpd,,0x00000020
+hpcsm130.gpd,hpcsm130.gpd,,0x00000020
+
+
+[STRING_DLL]
+hpcst130.dll,hpcst130.dll,,0x00000020
+hpcur130.dll,hpcur130.dll,,0x00000020
+hpmsn130.dll,,0x00000020
+hpmsl130.dll,,0x00000020
+hpcsn130.dem,,,0x00000020
+hpcsat20.dll,,,0x00000020
+
+
+[DATA_FILES_4555]
+hpcm4555.cfg,hpcm4555.cfg,,0x00000020
+hpc45556.xml,hpc45556.xml,,0x00000020
+hpcsc130.dtd,hpcsc130.dtd,,0x00000020
+hpc45556.gpd,hpc45556.gpd,,0x00000020
+hpc455x6.gpd,hpc455x6.gpd,,0x00000020
+hpc4555u.ini,hpc4555u.ini,,0x00000020
+hpcp6.hpx,hpcp6.hpx,,0x00000020
+
+
+
+[MANUAL_DUPLEX]
+hpcev130.dll,hpcev130.dll,,0x00000020
+
+
+[HELP]
+hpchl130.cab,hpchl130.cab,,0x00000020
+
+
+[EAC]
+cioum.dll,cioum.dll,,0x00000020
+cioum64.msi,cioum64.msi,,0x00000020
+
+[SECUREPRINT]
+HPSecurePrint64.dll,,,0x00000020
+hpspw130.dll,,,0x00000020
+
+[DMC_AMD64]
+hpcdmc64.dll,hpcdmc64.dll,,0x00000020
+
+
+[SERVICES]
+hpcls130.dll,hpcls130.dll,,0x00000020
+hpcss130.dll,hpcss130.dll,,0x00000020
+
+
+[RES_PCL6]
+pclxl.dll,pclxl.dll,,0x00000020
+
+
+[PCLXL_GPD_P3]
+pjl.gpd,pjl.gpd,,0x00000020
+pclxl.gpd,pclxl.gpd,,0x00000020
+
+
+[HP_UNIDRV]
+unidrv.dll,unidrv.dll,,0x00000020
+unires.dll,unires.dll,,0x00000020
+unidrvui.dll,unidrvui.dll,,0x00000020
+stdnames.gpd,stdnames.gpd,,0x00000020 
+unidrv.hlp,unidrv.hlp,,0x00000020
+stddtype.gdl,stddtype.gdl,,0x00000020
+stdschem.gdl,stdschem.gdl,,0x00000020
+stdschmx.gdl,stdschmx.gdl,,0x00000020
+
+
+[REGISTRY_SNP]
+HKLM,%HP_DRIVER_REG_PATH%\%HP_Mombi_Driver_Name1%,"DemFileName",0x00000000,hpcsn130.dem
+HKLM,%HP_DRIVER_REG_PATH%\%HP_Mombi_Driver_Name1%,"RealCfgDll",0x00000000,UNIDRVUI.dll
+HKLM,%HP_DRIVER_REG_PATH%\%HP_Mombi_Driver_Name1%,"EnableIE7Launch",0x00010001,0
+HKLM,%HP_DRIVER_REG_PATH%\%HP_Mombi_Driver_Name1%,"MystStdInstall",0x00010001,1
+
+
+
+[IMAGING]
+hpfie130.dll,hpfie130.dll,,0x00000020
+
+
+[SourceDisksNames]
+98="HP LaserJet M4555 MFP PCL 6 CD",HPC4555u.CAB,,
+97="HP LaserJet M4555 MFP PCL 6 CD",%LocaleCABFile%,,
+96=%DiskID%,,,""
+
+
+[SourceDisksFiles]
+hpc45556.gpd=98
+hpc455x6.gpd=98
+hpc4555u.ini=98 
+hpcpp130.dll=98 
+hpcui130.dll=98
+hpcpe130.dll=98
+hpmdp130.dll=98
+hpc6r130.dll=98
+hpcsm130.gpd=98
+hpcst130.dll=98
+hpcp6.hpx=98
+hpcur130.dll=98
+hpcpn130.dll=98
+hpmsn130.dll=98
+hpmsl130.dll=98
+hpcsn130.dem=98
+hpcsat20.dll=98
+cioum.dll=98
+cioum64.msi=98
+stddtype.gdl=98
+stdschem.gdl=98
+stdschmx.gdl=98
+hpcev130.dll=98
+hpcls130.dll=98
+hpcss130.dll=98
+hpcdmc64.dll=98
+hpbcfgre.dll=96
+hpcm4555.cfg=96
+hpc45556.xml=98
+hpcsc130.dtd=98
+hpcdmc32.dll=98
+hpcc6130.dll=98
+hpcc3130.dll=98
+stdnames.gpd=98 
+unidrv.dll=98
+unires.dll=98 
+unidrvui.dll=98 
+unidrv.hlp=97
+hpchl130.cab=98
+pclxl.dll=98
+pjl.gpd=98
+pclxl.gpd=98
+hpc6m130.gpd=98
+hpfie130.dll=98
+hpbcoins64.dll=96
+HPSecurePrint64.dll=98
+hpspw130.dll=98
+
+[DestinationDirs]
+DefaultDestDir=66000
+HPPRPROC=66001 
+PNPDLL_SYSCOPY=66002
+DMC_32=16425
+CAPI_32=16425
+VENDOR_SETUP=66002
+
+[RegSettings]
+HKLM,%HP_DIRECT_CONNECT_REG_PATH%,"DirectConnectBiDiSupported",0x00010001,1
+[Strings]      
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4enww.cab"
+
+
+[Strings.0401]      ; Arabic (Saudi Arabia)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4arww.cab"
+
+
+[Strings.0403]      ; Catalan
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4caww.cab"
+
+
+[Strings.0404]      ; Chinese (Traditional)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4zhtw.cab"
+
+
+[Strings.0804]      ; Chinese (Simplified)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4zhcn.cab"
+
+
+[Strings.0405]       ; Czech
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4csww.cab"
+
+
+[Strings.0406]      ; Danish
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4daww.cab"
+
+
+[Strings.0413]        ;Dutch (Standard)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFPPCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4nlww.cab"
+
+
+[Strings.0409]      ; English
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4enww.cab"
+
+
+[Strings.040B]        ;Finnish
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFPPCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4fiww.cab"
+
+
+[Strings.040C]      ;French (Standard)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFPPCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4frww.cab"
+
+
+[Strings.0407]      ;German
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4deww.cab"
+
+
+[Strings.0408]       ;Greek
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4elww.cab" 
+
+
+[Strings.040D]        ;Hebrew
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4heww.cab"
+
+
+[Strings.040E]       ;Hungerian 
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4huww.cab"
+
+
+[Strings.0410]       ;Italian (Standard)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4itww.cab"
+
+
+[Strings.0411]       ;Japanese
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4jaww.cab"
+
+
+[Strings.0412]        ;Korean
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4koww.cab"
+
+
+[Strings.0814]        ;Norwegian (Bokmal)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4noww.cab"
+
+
+[Strings.0415]        ;Polish
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4plww.cab"
+
+
+[Strings.0416]        ;Portuguese (Brazilian)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4ptww.cab"
+
+
+[Strings.0419]        ;Russian
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4ruww.cab"
+
+
+[Strings.041B]        ;Slovak 
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4skww.cab"
+
+
+[Strings.040A]       ;Spanish (Traditional)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4esww.cab"
+
+
+[Strings.041D]        ;Swedish
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4svww.cab"
+
+
+[Strings.041E]        ;Thai
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4thww.cab"
+
+
+[Strings.041F]        ;Turkish (Turkce)
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile="p6a4trww.cab"
+
+
+[Strings.041A]        ;Croatian - Croatia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP"
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4hrww.cab"
+
+
+[Strings.0402]        ;Bulgarian - Bulgaria
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4bgww.cab"
+
+
+[Strings.0425]        ;Estonian - Estonia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP"
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4etww.cab"
+
+
+[Strings.0421]        ;Indonesian - Indonesia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4idww.cab"
+ 
+ 
+[Strings.043F]        ;Kazakh - Kazakhstan
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4kkww.cab"
+
+
+[Strings.0427]        ;Lithuanian - Lithuania
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4ltww.cab"
+
+
+[Strings.0426]        ;Latvian - Latvia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4lvww.cab"
+
+
+[Strings.0418]        ;Romanian - Romania
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4roww.cab"
+
+
+[Strings.081A]        ;Serbian (Latin) - Serbia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP"
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4srww.cab"
+
+
+[Strings.0424]        ;Slovenian - Slovenia
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4slww.cab"
+
+
+[Strings.0422]        ;Ukrainian - Ukraine
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4ukww.cab"
+
+
+[Strings.042A]        ;Vietnamese - Vietnam
+PrinterClassName="Printers" 
+DiskID="HP LaserJet M4555 MFP PCL 6 Printer Driver Disk"
+PRINT_PROCESSOR="HPCPP130,hpcpp130.dll" 
+HP="HP" 
+HP_DRIVER_REG_PATH="SYSTEM\CurrentControlSet\Control\Print\Environments\Windows x64\Drivers\Version-3"
+HP_DIRECT_CONNECT_REG_PATH="Software\Hewlett-Packard\San Diego Shared IO"
+HP_Mombi_Driver_Name1="HP LaserJet M4555 MFP PCL 6"
+LocaleCABFile ="p6a4viww.cab"

@@ -1,0 +1,594 @@
+﻿<Window x:Class="RemoteSetupPrinters.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Behaviors="clr-namespace:RemoteSetupPrinters.Utils"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Extras"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ignore="http://www.ignore.com"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="Удаленное подключение принтеров"
+        Width="560"
+        Height="780"
+        MinWidth="560"
+        MinHeight="700"
+        Background="#FFAEA6A6"
+        DataContext="{Binding Main,
+                              Source={StaticResource Locator}}"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d ignore">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Skins/MainSkin.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="239" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Height="18"
+                   Margin="10,10,10,0"
+                   VerticalAlignment="Top"
+                   Text="Версия 2.3.3"
+                   TextAlignment="Right"
+                   TextWrapping="Wrap" />
+        <TextBlock Width="263"
+                   Height="21"
+                   Margin="10,34,0,0"
+                   HorizontalAlignment="Left"
+                   VerticalAlignment="Top"
+                   FontSize="13.333"
+                   Text="Имя удаленного компьютера или IP адрес:"
+                   TextWrapping="Wrap" />
+        <TextBox x:Name="NameHosts"
+                 Height="23"
+                 Margin="278,32,9,0"
+                 VerticalAlignment="Top"
+                 IsEnabled="{Binding IsEnableNameHost}"
+                 Text="{Binding NameHosts,
+                                UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding On_NameHostsKeyDown}" />
+            </TextBox.InputBindings>
+        </TextBox>
+        <GroupBox x:Name="GroupMode"
+                  Height="61"
+                  Margin="10,60,10,0"
+                  VerticalAlignment="Top"
+                  Header="Режим работы">
+            <Grid x:Name="LayoutGridGroupMode" Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <RadioButton x:Name="OneCompMode"
+                             Height="15.96"
+                             Margin="10,10,10,0"
+                             VerticalAlignment="Top"
+                             Content="Один удаленный компьютер"
+                             IsChecked="{Binding OneCompMode,
+                                                 Mode=TwoWay}"
+                             IsEnabled="{Binding IsEnableOneCompMode}">
+                    <RadioButton.ToolTip>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>В режиме &quot;Один удаленный компьютер&quot;</TextBlock>
+                            <TextBlock>все содержимое поля имени удаленного компьютера расценивается</TextBlock>
+                            <TextBlock>как имя одного компьютера</TextBlock>
+                        </StackPanel>
+                    </RadioButton.ToolTip>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding Path=DataContext.ModeChanged, RelativeSource={RelativeSource AncestorType=RadioButton}}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+                <RadioButton x:Name="ListCompMode"
+                             Grid.Column="1"
+                             Height="15.96"
+                             Margin="10,10,10,0"
+                             VerticalAlignment="Top"
+                             Content="Список удаленных компьютеров"
+                             IsChecked="{Binding ListCompMode,
+                                                 Mode=TwoWay}"
+                             IsEnabled="{Binding IsEnableListCompMode}">
+                    <RadioButton.ToolTip>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>В режиме &quot;Список удаленных компьютеров&quot;</TextBlock>
+                            <TextBlock>все содержимое поля имени удаленного компьютера</TextBlock>
+                            <TextBlock>разбивается на список, разделителем элементов списка служит &quot;,&quot;</TextBlock>
+                            <TextBlock>в результате строка вида: &quot;comp1,comp2,comp3&quot;</TextBlock>
+                            <TextBlock>будет разбира на 3 элемента, все пробелы указанные в строке не учитываются</TextBlock>
+                        </StackPanel>
+                    </RadioButton.ToolTip>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="Checked">
+                            <cmd:EventToCommand Command="{Binding Path=DataContext.ModeChanged, RelativeSource={RelativeSource AncestorType=RadioButton}}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </RadioButton>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="GroupPrintScan"
+                  Height="111"
+                  Margin="10,121,10,0"
+                  VerticalAlignment="Top"
+                  Header="Поиск принтеров">
+            <Grid x:Name="LayoutGridGropPrintScan" Margin="0,0,-2,-12.96">
+                <CheckBox x:Name="GetNetFromNameRemPC"
+                          Height="19"
+                          Margin="185,14,10,0"
+                          VerticalAlignment="Top"
+                          Content="Получить подсеть из имени удаленного компьютера"
+                          IsChecked="{Binding Path=GetNetFromNameRemPC_isChecked,
+                                              Mode=TwoWay,
+                                              UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding IsEnableGetNetFromNameRemPC}" />
+                <TextBlock Height="16.627"
+                           Margin="3,13,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="13.333"
+                           Text="Подсеть:"
+                           TextWrapping="Wrap" />
+                <TextBox x:Name="Network"
+                         Width="84.667"
+                         Height="22.627"
+                         Margin="60.82,10,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         FontSize="13.333"
+                         IsEnabled="{Binding NetworkIsEnable}"
+                         MaxLength="12"
+                         Text="{Binding Network}">
+                    <i:Interaction.Behaviors>
+                        <Behaviors:TextBoxInputMask InputMask="999/999/999" />
+                    </i:Interaction.Behaviors>
+                </TextBox>
+                <TextBlock Height="16.627"
+                           Margin="150.487,13,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="13.333"
+                           Text=".0/24"
+                           TextWrapping="Wrap" />
+                <TextBlock Width="246"
+                           Margin="10,38,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="13.333"
+                           TextWrapping="Wrap"><Run Text="Диапазон" /><Run Text=" " /><Run Text="IP " /><Run Text="адресов для" /><Run Text=" " /><Run Text="сканирования" /><Run Text=":" />
+                </TextBlock>
+                <TextBlock Width="23"
+                           Margin="261,38,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="13.333"
+                           Text="С"
+                           TextWrapping="Wrap" />
+                <TextBox x:Name="FirstItem"
+                         Width="32"
+                         Height="23"
+                         Margin="275,35,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Behaviors:TextBoxInputNumber.Mask="Integer"
+                         Behaviors:TextBoxInputNumber.MaximumValue="254"
+                         Behaviors:TextBoxInputNumber.MinimumValue="1"
+                         FontSize="13.333"
+                         IsEnabled="{Binding IsEnableFirstItem}"
+                         MaxLength="3"
+                         Text="{Binding FirstItem}" />
+                <TextBlock Margin="312,38,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           FontSize="13.333"
+                           RenderTransformOrigin="0.481,0.441"
+                           Text="ПО"
+                           TextWrapping="Wrap" />
+                <TextBox x:Name="LastItem"
+                         Width="34"
+                         Height="23"
+                         Margin="337,35,0,0"
+                         HorizontalAlignment="Left"
+                         VerticalAlignment="Top"
+                         Behaviors:TextBoxInputNumber.Mask="Integer"
+                         Behaviors:TextBoxInputNumber.MaximumValue="254"
+                         Behaviors:TextBoxInputNumber.MinimumValue="1"
+                         FontSize="13.333"
+                         IsEnabled="{Binding IsEnableLastItem}"
+                         MaxLength="3"
+                         Text="{Binding LastItem}" />
+                <Button x:Name="btScan"
+                        Margin="10,61.587,10,0"
+                        VerticalAlignment="Top"
+                        Command="{Binding On_btScan_click}"
+                        IsEnabled="{Binding IsEnableBtScan}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/RemoteSetupPrinters;component/Resources/earth_scan.ico" />
+                            <TextBlock Text="{Binding BtScan_content}" />
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="GroupPrintOnRemPC"
+                  Grid.Row="1"
+                  Height="222"
+                  Margin="10,2,10,0"
+                  VerticalAlignment="Top"
+                  Header="Принтеры на удаленном компьютере"
+                  Visibility="{Binding IsVisiblePrintersOnRemPCGroup,
+                                       Mode=TwoWay}">
+            <Grid x:Name="LayoutGroupPrintOnRemPC" Margin="0,0,-2,-12.96">
+                <TextBlock Height="23"
+                           Margin="10,10,0,0"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Top"
+                           TextWrapping="Wrap"><Run Text="Текущий пользователь" /><Run Text=":" />
+                </TextBlock>
+                <ComboBox x:Name="CurUserListOnRemPC"
+                          Width="191"
+                          Height="23"
+                          Margin="143.797,10,0,0"
+                          HorizontalAlignment="Left"
+                          VerticalAlignment="Top"
+                          IsEnabled="{Binding IsEnableCurUserListOnRemPC}"
+                          ItemsSource="{Binding UserOnRemPC}"
+                          SelectedValue="{Binding SelectedUserOnRemPC}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cmd:EventToCommand Command="{Binding Path=On_UserOnRemPCChanged}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+                <Behaviors:WatermarkedTextBox x:Name="FilterPrintersOnRemPC"
+                                              Height="23"
+                                              Margin="339.797,10,10,0"
+                                              VerticalAlignment="Top"
+                                              Text="{Binding FilterText,
+                                                             UpdateSourceTrigger=PropertyChanged}"
+                                              TextWrapping="Wrap"
+                                              ToolTip="Фильтрация по названию" />
+                <ListView x:Name="ListPrintersOnRemPC"
+                          Height="133"
+                          Margin="10,38,10,0"
+                          VerticalAlignment="Top"
+                          IsEnabled="{Binding IsEnableListPrintersOnRemPC}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding InstalledPrintersOnRemPCView}"
+                          SelectedIndex="{Binding InstalledPrintersOnRemPCIndex,
+                                                  Mode=TwoWay}"
+                          SelectedItem="{Binding InstalledPrintersOnRemPCItem,
+                                                 Mode=TwoWay}"
+                          SelectionMode="Extended">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Принтер">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Image Width="16"
+                                                   Height="16"
+                                                   Source="{Binding IsDefault}" />
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Port}" Header="Порт" />
+                            <GridViewColumn Width="100"
+                                            DisplayMemberBinding="{Binding IPAdress}"
+                                            Header="IP Адрес" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button x:Name="btDelPrintersOnRemPC"
+                        Width="130"
+                        Margin="10,176,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding On_btDelPrintersOnRemPCClick}"
+                        IsEnabled="{Binding PrintersOnRemPCButtonIsEnable}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/RemoteSetupPrinters;component/Resources/print_delete.ico" />
+                            <TextBlock>Удалить</TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>Удаление принтера на удаленном компьютере</TextBlock>
+                        </StackPanel>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="btSetDefaultPrintersOnRemPC"
+                        Width="130"
+                        Margin="373,176,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding On_btSetDefaultPrintersOnRemPCClick}"
+                        IsEnabled="{Binding PrintersOnRemPCButtonIsEnable}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/RemoteSetupPrinters;component/Resources/defaultPrinter.ico" />
+                            <TextBlock>По умолчанию</TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>Установка принтера по умолчанию на удаленном компьютере</TextBlock>
+                        </StackPanel>
+                    </Button.ToolTip>
+                </Button>
+                <Button x:Name="btPrintTestPagePrintersOnRemPC"
+                        Width="169"
+                        Margin="175,176,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Command="{Binding On_btPrintTestPagePrintersOnRemPCClick}"
+                        IsEnabled="{Binding PrintersOnRemPCButtonIsEnable}"
+                        RenderTransformOrigin="0.333,-0.5">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/RemoteSetupPrinters;component/Resources/page.ico" />
+                            <TextBlock>Печать тестовой стр.</TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                    <Button.ToolTip>
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock>Печать тестовой страници на удаленном компьютере</TextBlock>
+                            <TextBlock>используя выбранный принтер.</TextBlock>
+                            <TextBlock>Доступно только дял ЛОКАЛЬНО установленных принтеров!!</TextBlock>
+                        </StackPanel>
+                    </Button.ToolTip>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <GroupBox x:Name="GroupPrinters"
+                  Grid.Row="2"
+                  Margin="10,0,10,31"
+                  Header="Найденные принтеры">
+            <Grid x:Name="LayoutGridGropPrinters" Margin="0,0,-2,-12.96">
+                <Grid.Resources>
+                    <ControlTemplate x:Key="xTmpl" TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="Border"
+                                Background="Transparent"
+                                Padding="2"
+                                SnapsToDevicePixels="true">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FFDDDDDD" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FFC5CBF9" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FFDDDDDD" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Columns="{TemplateBinding GridView.ColumnCollection}"
+                                                  Content="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                    <ControlTemplate x:Key="Selected" TargetType="{x:Type ListViewItem}">
+                        <Border x:Name="Border"
+                                Background="Transparent"
+                                Padding="2"
+                                SnapsToDevicePixels="true">
+                            <Border.InputBindings>
+                                <MouseBinding Command="{Binding Path=DataContext.On_netPrinterItemClick, RelativeSource={RelativeSource AncestorType=ListView}}" MouseAction="LeftClick" />
+                            </Border.InputBindings>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal" />
+                                    <VisualState x:Name="MouseOver" />
+                                    <VisualState x:Name="Disabled" />
+                                </VisualStateGroup>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FFC5CBF9" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedUnfocused">
+                                        <Storyboard>
+                                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border" Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                <EasingColorKeyFrame KeyTime="0" Value="#FFDDDDDD" />
+                                            </ColorAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                  Columns="{TemplateBinding GridView.ColumnCollection}"
+                                                  Content="{TemplateBinding Content}" />
+                        </Border>
+                    </ControlTemplate>
+                </Grid.Resources>
+
+                <ListView x:Name="Printers"
+                          Margin="10,10,10,43"
+                          IsEnabled="{Binding IsEnableListNetPrinters}"
+                          IsSynchronizedWithCurrentItem="True"
+                          ItemsSource="{Binding SnmpNetPrinters}"
+                          SelectedItem="{Binding SelectedNetPrinterItem,
+                                                 Mode=TwoWay}"
+                          SelectionMode="Single">
+                    <ListView.ContextMenu>
+                        <ContextMenu x:Name="ListNetPrintersMenu"
+                                     Background="WhiteSmoke"
+                                     StaysOpen="true">
+                            <ContextMenu.BitmapEffect>
+                                <BitmapEffectGroup />
+                            </ContextMenu.BitmapEffect>
+                            <MenuItem x:Name="CopyCurrent"
+                                      Command="{Binding MenuCopyCurrent}"
+                                      Header="Копировать текущий элемент"
+                                      IsEnabled="{Binding IsEnableListNetPrintersMenu}" />
+                            <MenuItem x:Name="CopySelected"
+                                      Command="{Binding MenuCopySelected}"
+                                      Header="Копировать выбранные элементы"
+                                      IsEnabled="{Binding IsEnableListNetPrintersMenu}" />
+                            <MenuItem x:Name="CopyAll"
+                                      Command="{Binding MenuCopyAll}"
+                                      Header="Копировать все"
+                                      IsEnabled="{Binding IsEnableListNetPrintersMenu}" />
+                        </ContextMenu>
+                    </ListView.ContextMenu>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="SnapsToDevicePixels" Value="true" />
+                            <Setter Property="OverridesDefaultStyle" Value="true" />
+
+                            <Setter Property="Template" Value="{StaticResource xTmpl}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Template" Value="{StaticResource Selected}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <!--<ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Style>
+                    </ListView.ItemContainerStyle>-->
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <cmd:EventToCommand Command="{Binding Path=On_netPrinterItemClick}" PassEventArgsToCommand="True" />
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <!--<ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=.}" Width="{Binding Path=ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}" >
+                                <TextBlock.InputBindings>
+                                    <MouseBinding MouseAction="LeftClick" Command="{Binding Path=DataContext.On_netPrintersItem_click, RelativeSource={RelativeSource AncestorType=ListView}}"/>
+                                </TextBlock.InputBindings>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>-->
+                    <ListView.View>
+                        <GridView AllowsColumnReorder="True">
+                            <GridViewColumn Width="25">
+                                <GridViewColumn.Header>
+                                    <CheckBox Name="chkSelectAll"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              Command="{Binding On_selectAll_click}"
+                                              IsChecked="{Binding Path=DataContext.AllSelected,
+                                                                  RelativeSource={RelativeSource AncestorType=ListView}}"
+                                              IsThreeState="True" />
+                                </GridViewColumn.Header>
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Name="chkSelect"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalContentAlignment="Center"
+                                                  IsChecked="{Binding Path=IsSelected,
+                                                                      Mode=TwoWay,
+                                                                      UpdateSourceTrigger=PropertyChanged}"
+                                                  IsThreeState="False">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="Checked">
+                                                    <cmd:EventToCommand Command="{Binding Path=DataContext.On_netPrintersItem_click, RelativeSource={RelativeSource AncestorType=ListView}}" PassEventArgsToCommand="True" />
+                                                </i:EventTrigger>
+                                                <i:EventTrigger EventName="Unchecked">
+                                                    <cmd:EventToCommand Command="{Binding Path=DataContext.On_netPrintersItem_click, RelativeSource={RelativeSource AncestorType=ListView}}" PassEventArgsToCommand="True" />
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </CheckBox>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Модель принтера" />
+                            <GridViewColumn DisplayMemberBinding="{Binding HostName}" Header="Сетевое имя" />
+                            <GridViewColumn Width="100"
+                                            DisplayMemberBinding="{Binding IPAdress}"
+                                            Header="IP Адрес" />
+                            <GridViewColumn DisplayMemberBinding="{Binding TypeDevice}" Header="Тип устройства" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <Button x:Name="btSetup"
+                        Width="115"
+                        Height="23"
+                        Margin="0,0,10,14.96"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding On_btSetup_click}"
+                        IsEnabled="{Binding IsBtSetupEnable}">
+                    <Button.Content>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Width="16"
+                                   Height="16"
+                                   Margin="0,0,5,0"
+                                   Source="/RemoteSetupPrinters;component/Resources/print_add.ico" />
+                            <TextBlock>Подключить</TextBlock>
+                        </StackPanel>
+                    </Button.Content>
+                </Button>
+            </Grid>
+        </GroupBox>
+        <StatusBar Grid.Row="2"
+                   Height="25"
+                   VerticalAlignment="Bottom">
+            <TextBlock TextWrapping="Wrap"><Run Text="Состояние" /><Run Text=":" />
+            </TextBlock>
+            <TextBlock x:Name="StatusText"
+                       Width="478"
+                       Text="{Binding StatusText,
+                                      Mode=OneWay,
+                                      UpdateSourceTrigger=PropertyChanged}"
+                       TextWrapping="Wrap" />
+        </StatusBar>
+    </Grid>
+</Window>
