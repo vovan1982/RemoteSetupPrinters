@@ -3636,7 +3636,8 @@ namespace RemoteSetupPrinters.ViewModel
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableNameHost = true);
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableFirstItem = true);
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableLastItem = true);
-                        DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableGetNetFromNameRemPC = true);
+                        if (OneCompMode)
+                            DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableGetNetFromNameRemPC = true);
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableListNetPrinters = true);
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableListPrintersOnRemPC = true);
                         DispatcherHelper.CheckBeginInvokeOnUI(() => IsEnableCurUserListOnRemPC = true);
