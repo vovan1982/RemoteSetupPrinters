@@ -36,7 +36,7 @@
         <TextBlock Height="18"
                    Margin="10,10,10,0"
                    VerticalAlignment="Top"
-                   Text="Версия 2.3.4"
+                   Text="Версия 2.3.5"
                    TextAlignment="Right"
                    TextWrapping="Wrap" />
         <TextBlock Width="263"

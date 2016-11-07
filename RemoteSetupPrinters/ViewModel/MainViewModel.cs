@@ -2683,7 +2683,7 @@ namespace RemoteSetupPrinters.ViewModel
                         if (PingHost(arrRemPC[i]))
                         {
                             // Копирование списка выбранных принтеров для дальнейшей обработки
-                            List<NetPrinters> printersForInstall = selectedPrinters;
+                            List<NetPrinters> printersForInstall = new List<NetPrinters>(selectedPrinters);
                             #region Проверка установленных принтеров на удаленном компьютере
                             //-----------------------------------------------------------------------------------------
                             // Получение IP адресов принтеров установленных на уделенном компьютере и сравнение их со списком адресов выбранных принтеров
